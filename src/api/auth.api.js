@@ -1,9 +1,20 @@
-import axios from "axios";
+import api from "./axios"; 
 
-export const loginUser = async (data) => {
-  const res = await axios.post(
-    "http://localhost:5000/api/auth/login",
-    data
-  );
-  return res.data;
+export const registerUser = async (userData) => {
+  try {
+    const response = await api.post("/auth/register", userData);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || "Registration failed";
+  }
+};
+
+export const loginUser = async (userData) => {
+  try {
+    
+    const response = await api.post("/auth/login", userData);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || "Login failed";
+  }
 };
