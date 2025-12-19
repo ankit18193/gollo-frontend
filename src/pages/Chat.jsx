@@ -23,14 +23,14 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 const Chat = () => {
     const { logout, user } = useAuth();
 
-
+    const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
     const [chats, setChats] = useState([]);
     const [activeChatId, setActiveChatId] = useState(null);
     const [dbChatId, setDbChatId] = useState(null);
 
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
-    const [sidebarOpen, setSidebarOpen] = useState(true);
+    
     const [systemError, setSystemError] = useState(null);
     const [inputLocked, setInputLocked] = useState(false);
 
@@ -513,9 +513,12 @@ const Chat = () => {
             )}
 
             <main className="main-content">
-                <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 50 }}>
-                    <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer' }}>
-                        {sidebarOpen ? <X size={24} className="mobile-only" /> : <Menu size={24} />}
+                <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 2000 }}>
+                    <button
+                        onClick={() => setSidebarOpen(!sidebarOpen)}
+                        style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer' }}
+                    >
+                        {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>
                 {systemError && <div className="system-banner">{systemError}</div>}
