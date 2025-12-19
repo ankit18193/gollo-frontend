@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://gollo-backend.onrender.com",
+  baseURL: "https://gollo-backend.onrender.com/api",
   withCredentials: false,
 });
 
