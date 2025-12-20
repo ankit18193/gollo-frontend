@@ -14,15 +14,8 @@ const Register = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  // ✅ SOCIAL LOGIN HANDLER (SAME AS LOGIN PAGE)
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
   const handleSocialLogin = (provider) => {
-    if (!API_BASE_URL) {
-      alert("API base URL not configured");
-      return;
-    }
-    window.location.href = `${API_BASE_URL}/api/auth/${provider}`;
+    window.location.href = `https://gollo-backend.onrender.com/api/auth/${provider}`;
   };
 
   const handleSubmit = async (e) => {

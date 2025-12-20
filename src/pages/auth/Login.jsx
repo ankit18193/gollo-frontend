@@ -61,17 +61,8 @@ const Login = () => {
       setLoading(false);
     }
   };
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
-
-  
-
   const handleSocialLogin = (provider) => {
-    if (!API_BASE_URL) {
-      console.error("API BASE URL not defined");
-      return;
-    }
-    window.location.href = `${API_BASE_URL}/api/auth/${provider}`;
+    window.location.href = `https://gollo-backend.onrender.com/api/auth/${provider}`;
   };
 
 
