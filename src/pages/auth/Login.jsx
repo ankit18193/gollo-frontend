@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'; 
-import { Bot, Github, Linkedin } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Bot, Github, } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../api/auth.api";
 import { useAuth } from "../../context/AuthContext";
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,9 +14,9 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  
+
   useEffect(() => {
-   
+
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
     const userData = params.get("user");
@@ -23,13 +24,13 @@ const Login = () => {
 
     if (token && userData) {
       try {
-        
+
         const user = JSON.parse(decodeURIComponent(userData));
-        
-        
+
+
         login(token, user);
-        
-        
+
+
         navigate("/", { replace: true });
       } catch (err) {
         console.error("Social Login Parse Error:", err);
@@ -38,9 +39,9 @@ const Login = () => {
     } else if (errorMsg) {
       setError("Social login failed. Please try again.");
     }
-  }, []); 
+  }, []);
 
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -60,18 +61,27 @@ const Login = () => {
       setLoading(false);
     }
   };
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 
   
+
   const handleSocialLogin = (provider) => {
-    
-    window.open(`http://localhost:5000/api/auth/${provider}`, "_self");
+    if (!API_BASE_URL) {
+      console.error("API BASE URL not defined");
+      return;
+    }
+    window.location.href = `${API_BASE_URL}/api/auth/${provider}`;
   };
+
+
+
 
   return (
     <div className="auth-container">
       <div className="auth-logo">
-        <div style={{ background: 'white', borderRadius: '50%', padding: '5px', display:'flex' }}>
-            <Bot size={28} color="black" />
+        <div style={{ background: 'white', borderRadius: '50%', padding: '5px', display: 'flex' }}>
+          <Bot size={28} color="black" />
         </div>
         <span>Gollo AI</span>
       </div>
@@ -87,9 +97,9 @@ const Login = () => {
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <div className="auth-input-group">
-            <input 
-              type="email" 
-              placeholder="Email address" 
+            <input
+              type="email"
+              placeholder="Email address"
               className="auth-input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -97,9 +107,9 @@ const Login = () => {
             />
           </div>
           <div className="auth-input-group">
-            <input 
-              type="password" 
-              placeholder="Password" 
+            <input
+              type="password"
+              placeholder="Password"
               className="auth-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -112,7 +122,7 @@ const Login = () => {
         </form>
 
         <div className="auth-footer">
-          Don't have an account? 
+          Don't have an account?
           <a href="/register" className="auth-link">Sign up</a>
         </div>
 
@@ -120,26 +130,26 @@ const Login = () => {
           <span>OR</span>
         </div>
 
-        
+
         <button className="social-btn" onClick={() => handleSocialLogin('google')}>
-           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="social-icon" />
-           Continue with Google
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="social-icon" />
+          Continue with Google
         </button>
-        
-        
+
+
         <button className="social-btn" onClick={() => handleSocialLogin('microsoft')}>
-           <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" className="social-icon" />
-           Continue with Microsoft Account
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft" className="social-icon" />
+          Continue with Microsoft Account
         </button>
 
-        
-        <button className="social-btn" onClick={() => handleSocialLogin('github')} style={{background: '#24292e', color: 'white', border: 'none'}}>
-           <Github size={20} className="social-icon" style={{marginRight: '12px'}} />
-           Continue with GitHub
+
+        <button className="social-btn" onClick={() => handleSocialLogin('github')} style={{ background: '#24292e', color: 'white', border: 'none' }}>
+          <Github size={20} className="social-icon" style={{ marginRight: '12px' }} />
+          Continue with GitHub
         </button>
 
-        
-        
+
+
 
       </div>
     </div>
