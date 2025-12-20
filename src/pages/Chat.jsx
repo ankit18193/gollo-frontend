@@ -374,7 +374,6 @@ const Chat = () => {
                         <input placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="auth-input" style={{ padding: '8px', fontSize: '14px', background: '#2f2f2f', border: '1px solid #444' }} />
                     </div>
 
-
                     <div className="history-list">
                         {[...filteredChats].sort((a, b) => Number(b.pinned || 0) - Number(a.pinned || 0)).map(chat => (
                             <div
@@ -394,11 +393,8 @@ const Chat = () => {
                                 onMouseLeave={() => setHoveredChatId(null)}
                             >
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, overflow: 'hidden' }}>
-
                                     {chat.pinned && <Pin size={12} fill="#19c37d" color="#19c37d" style={{ minWidth: '12px' }} />}
-
                                     {!chat.pinned && <MessageSquare size={14} />}
-
                                     {editingChatId === chat.id ? (
                                         <input
                                             value={editingTitle}
@@ -413,7 +409,6 @@ const Chat = () => {
                                         <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: '14px' }} onDoubleClick={(e) => startRename(chat, e)}>{chat.title}</span>
                                     )}
                                 </div>
-
 
                                 {(hoveredChatId === chat.id || menuOpenId === chat.id) && (
                                     <button
@@ -434,7 +429,6 @@ const Chat = () => {
                                         <MoreVertical size={16} />
                                     </button>
                                 )}
-
 
                                 {menuOpenId === chat.id && (
                                     <div
@@ -465,7 +459,6 @@ const Chat = () => {
                             </div>
                         ))}
                     </div>
-
 
                     <div style={{ marginTop: 'auto', padding: '10px', borderTop: '1px solid #333', position: 'relative' }}>
                         {showProfileModal && (
@@ -531,7 +524,8 @@ const Chat = () => {
                         </div>
                     ) : (
                         activeChat.messages.map((msg, i) => (
-                            <div key={i} className={`message-wrapper ${msg?.role || 'assistant'}`}>
+                            // 🔥 FIX: Added maxWidth and margin: auto to center messages like Gemini
+                            <div key={i} className={`message-wrapper ${msg?.role || 'assistant'}`} style={{ maxWidth: '768px', margin: '0 auto', width: '100%' }}>
                                 {msg?.role === 'assistant' && <div className="avatar" style={{ background: '#19c37d' }}><Bot size={20} color="white" /></div>}
                                 <div className="message-bubble" style={{
                                     overflow: 'hidden',
@@ -563,7 +557,8 @@ const Chat = () => {
                         ))
                     )}
                     {loading && (
-                        <div className="message-wrapper assistant">
+                        // 🔥 FIX: Added maxWidth and margin: auto to center loading bubble too
+                        <div className="message-wrapper assistant" style={{ maxWidth: '768px', margin: '0 auto', width: '100%' }}>
                             <div className="avatar" style={{ background: '#19c37d' }}><Bot size={20} color="white" /></div>
                             <div className="message-bubble" style={{ background: '#444654', padding: '12px 16px', borderRadius: '8px', marginLeft: '10px' }}><span className="cursor">|</span></div>
                         </div>
